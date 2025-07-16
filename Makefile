@@ -1,22 +1,26 @@
 NAME := fractol
-SRC_FILES := fractol.c
+
+SRC_FILES := fractol.c main.c handling_events.c parse_arguments.c
 OBJ_FILES := $(SRC_FILES:%.c=%.o)
 HEADERS := fractol.h
 
 CC := cc
-C_FLAGS := -g3 -Wall -Wextra -Werror
-CPP_FLAGS := $()
+CFLAGS := -g3 -Wall -Wextra -Werror
+CPPFLAGS := -Imlx
+LDFLAGS:= -Lmlx
+LDLIBS := -lmlx -lXext -lX11 -lm
 
 all : $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	$(CC) $(OBJ_FILES) -o $(C_FLAGS)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-$(OBJ_FILES):%.o:%.c $(HEADERS)
-	$(CC) -c $(CPP_FLAGS) $(C_FLAGS)
+%.o:%.c $(HEADERS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@ 
 
 clean:
 	rm -rf $(OBJ_FILES)
 
 fclean: clean
 	rm -rf $(OBJ_FILES)
+	rm $(NAME)

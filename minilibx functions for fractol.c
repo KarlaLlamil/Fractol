@@ -80,6 +80,8 @@ KeyRelease      = 3
 ButtonPress     = 4
 ButtonRelease   = 5
 MotionNotify    = 6
+	// if(!validate_args(argc, argv))
+
 EnterNotify     = 7
 LeaveNotify     = 8
 Expose          = 12
